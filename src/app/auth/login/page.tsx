@@ -106,20 +106,56 @@ export default function LoginPage() {
   const isAdmin = email === 'Kennen_02@icloud.com';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-5">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md">
+    <div style={{ 
+      minHeight: '100vh', 
+      backgroundColor: '#f8fafc', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      padding: '20px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+    }}>
+      <div style={{ 
+        backgroundColor: 'white', 
+        borderRadius: '16px', 
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', 
+        width: '100%', 
+        maxWidth: '480px',
+        overflow: 'hidden'
+      }}>
         
-        <div className="p-8">
-          <div className="text-center mb-8">
-            <div className={`w-16 h-16 ${isAdmin ? 'bg-red-600' : 'bg-amber-500'} rounded-full flex items-center justify-center mx-auto mb-4 text-2xl`}>
+        <div style={{ padding: '48px 32px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+            <div style={{ 
+              width: '64px', 
+              height: '64px', 
+              backgroundColor: isAdmin ? '#dc2626' : '#f59e0b', 
+              borderRadius: '50%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              margin: '0 auto 24px',
+              fontSize: '28px',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+            }}>
               {isAdmin ? '🛡️' : '🏗️'}
             </div>
             
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 style={{ 
+              fontSize: '28px', 
+              fontWeight: '800', 
+              color: '#111827', 
+              marginBottom: '8px',
+              lineHeight: '1.2'
+            }}>
               {isSignUp ? 'Join BuildHub' : (isAdmin ? 'Admin Access' : 'Welcome Back')}
             </h1>
             
-            <p className="text-gray-600">
+            <p style={{ 
+              color: '#6b7280',
+              fontSize: '16px',
+              lineHeight: '1.5'
+            }}>
               {isSignUp 
                 ? 'Create your account to access construction jobs' 
                 : (isAdmin ? 'Administrative Dashboard Access' : 'Sign in to BuildHub')
@@ -127,33 +163,65 @@ export default function LoginPage() {
             </p>
 
             {isAdmin && !isSignUp && (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-4 text-sm text-amber-800">
+              <div style={{ 
+                backgroundColor: '#fef3c7', 
+                border: '2px solid #f59e0b', 
+                borderRadius: '12px', 
+                padding: '16px', 
+                margin: '20px 0',
+                fontSize: '14px',
+                color: '#92400e',
+                fontWeight: '600'
+              }}>
                 🔐 <strong>Admin Mode Detected</strong>
               </div>
             )}
           </div>
 
           {/* Sign Up / Sign In Toggle */}
-          <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
+          <div style={{ 
+            display: 'flex', 
+            backgroundColor: '#f3f4f6', 
+            borderRadius: '12px', 
+            padding: '6px',
+            marginBottom: '32px',
+            boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+          }}>
             <button
               type="button"
               onClick={() => setIsSignUp(false)}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                !isSignUp 
-                  ? 'bg-amber-500 text-white shadow-sm' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                backgroundColor: !isSignUp ? '#f59e0b' : 'transparent',
+                color: !isSignUp ? 'white' : '#6b7280',
+                transition: 'all 0.3s ease',
+                boxShadow: !isSignUp ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+              }}
             >
               Sign In
             </button>
             <button
               type="button"
               onClick={() => setIsSignUp(true)}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                isSignUp 
-                  ? 'bg-amber-500 text-white shadow-sm' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                backgroundColor: isSignUp ? '#f59e0b' : 'transparent',
+                color: isSignUp ? 'white' : '#6b7280',
+                transition: 'all 0.3s ease',
+                boxShadow: isSignUp ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+              }}
             >
               Sign Up
             </button>
@@ -162,15 +230,30 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit}>
             {/* Sign Up Fields */}
             {isSignUp && (
-              <div className="space-y-5 mb-6">
-                <div className="grid grid-cols-2 gap-3">
+              <div style={{ marginBottom: '24px' }}>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: '1fr 1fr', 
+                  gap: '16px', 
+                  marginBottom: '24px' 
+                }}>
                   <input
                     type="text"
                     placeholder="First Name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required={isSignUp}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                    style={{
+                      padding: '16px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '12px',
+                      fontSize: '16px',
+                      backgroundColor: '#fafafa',
+                      transition: 'all 0.3s ease',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
                   />
                   <input
                     type="text"
@@ -178,35 +261,73 @@ export default function LoginPage() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required={isSignUp}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                    style={{
+                      padding: '16px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '12px',
+                      fontSize: '16px',
+                      backgroundColor: '#fafafa',
+                      transition: 'all 0.3s ease',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
                   />
                 </div>
                 
                 {/* User Type Selection */}
-                <div>
-                  <label className="block mb-2 text-sm font-semibold text-gray-700">
+                <div style={{ marginBottom: '24px' }}>
+                  <label style={{ 
+                    display: 'block', 
+                    marginBottom: '12px', 
+                    fontSize: '16px', 
+                    fontWeight: '700', 
+                    color: '#374151' 
+                  }}>
                     I am a:
                   </label>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: '1fr 1fr', 
+                    gap: '12px' 
+                  }}>
                     <button
                       type="button"
                       onClick={() => setUserType('customer')}
-                      className={`p-3 border-2 rounded-lg text-sm font-semibold text-center transition-all duration-200 ${
-                        userType === 'customer' 
-                          ? 'border-amber-500 bg-amber-50 text-amber-800' 
-                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                      }`}
+                      style={{
+                        padding: '16px',
+                        border: `3px solid ${userType === 'customer' ? '#f59e0b' : '#e5e7eb'}`,
+                        backgroundColor: userType === 'customer' ? '#fef3c7' : '#fafafa',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        color: userType === 'customer' ? '#92400e' : '#6b7280',
+                        transition: 'all 0.3s ease',
+                        transform: userType === 'customer' ? 'translateY(-2px)' : 'none',
+                        boxShadow: userType === 'customer' ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                      }}
                     >
                       🏠 Homeowner/Customer
                     </button>
                     <button
                       type="button"
                       onClick={() => setUserType('contractor')}
-                      className={`p-3 border-2 rounded-lg text-sm font-semibold text-center transition-all duration-200 ${
-                        userType === 'contractor' 
-                          ? 'border-amber-500 bg-amber-50 text-amber-800' 
-                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
-                      }`}
+                      style={{
+                        padding: '16px',
+                        border: `3px solid ${userType === 'contractor' ? '#f59e0b' : '#e5e7eb'}`,
+                        backgroundColor: userType === 'contractor' ? '#fef3c7' : '#fafafa',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        color: userType === 'contractor' ? '#92400e' : '#6b7280',
+                        transition: 'all 0.3s ease',
+                        transform: userType === 'contractor' ? 'translateY(-2px)' : 'none',
+                        boxShadow: userType === 'contractor' ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                      }}
                     >
                       🔨 Professional/Contractor
                     </button>
@@ -215,14 +336,27 @@ export default function LoginPage() {
               </div>
             )}
 
-            <div className="space-y-4 mb-6">
+            <div style={{ marginBottom: '24px' }}>
               <input
                 type="email"
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  marginBottom: '16px',
+                  backgroundColor: '#fafafa',
+                  transition: 'all 0.3s ease',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               />
               
               <input
@@ -231,20 +365,52 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  backgroundColor: '#fafafa',
+                  transition: 'all 0.3s ease',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 rounded-lg text-white font-semibold text-lg transition-all duration-200 ${
-                loading 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : isAdmin && !isSignUp 
-                    ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-amber-500 hover:bg-amber-600 shadow-lg hover:shadow-xl'
-              }`}
+              style={{
+                width: '100%',
+                padding: '18px',
+                backgroundColor: loading ? '#d1d5db' : (isAdmin && !isSignUp ? '#dc2626' : '#f59e0b'),
+                color: 'white',
+                border: 'none',
+                borderRadius: '12px',
+                fontSize: '18px',
+                fontWeight: '700',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: loading ? 'none' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                transform: loading ? 'none' : 'translateY(-1px)',
+                letterSpacing: '0.5px'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-1px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                }
+              }}
             >
               {loading 
                 ? (isSignUp ? 'Creating Account...' : 'Signing In...')
@@ -258,28 +424,88 @@ export default function LoginPage() {
 
           {/* Admin Credentials Display */}
           {isAdmin && !isSignUp && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
-              <strong>Admin Credentials:</strong><br />
-              Email: Kennen_02@icloud.com<br />
-              Password: Kenan3477!
+            <div style={{ 
+              marginTop: '32px', 
+              padding: '20px', 
+              backgroundColor: '#f9fafb', 
+              borderRadius: '12px',
+              fontSize: '14px',
+              border: '2px solid #e5e7eb',
+              lineHeight: '1.6'
+            }}>
+              <strong style={{ color: '#374151' }}>Admin Credentials:</strong><br />
+              <span style={{ fontFamily: 'monospace', color: '#6b7280' }}>Email: Kennen_02@icloud.com</span><br />
+              <span style={{ fontFamily: 'monospace', color: '#6b7280' }}>Password: Kenan3477!</span>
             </div>
           )}
 
           {/* Sign Up Benefits */}
           {isSignUp && (
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h4 className="text-sm font-semibold text-blue-800 mb-2">✨ Member Benefits:</h4>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>• Access to detailed job information</li>
-                <li>• Interactive map with exact locations</li>
-                <li>• Direct contact with project owners</li>
-                <li>• Apply to multiple jobs instantly</li>
+            <div style={{ 
+              marginTop: '32px', 
+              padding: '24px', 
+              backgroundColor: '#f0f9ff', 
+              borderRadius: '16px',
+              border: '2px solid #dbeafe',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
+            }}>
+              <h4 style={{ 
+                margin: '0 0 16px 0', 
+                color: '#0369a1', 
+                fontSize: '16px', 
+                fontWeight: '700',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                ✨ Member Benefits:
+              </h4>
+              <ul style={{ 
+                margin: 0, 
+                paddingLeft: '0', 
+                listStyle: 'none',
+                color: '#374151',
+                fontSize: '15px',
+                lineHeight: '1.8'
+              }}>
+                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
+                  Access to detailed job information
+                </li>
+                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
+                  Interactive map with exact locations
+                </li>
+                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
+                  Direct contact with project owners
+                </li>
+                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
+                  Apply to multiple jobs instantly
+                </li>
               </ul>
             </div>
           )}
 
-          <div className="text-center mt-6">
-            <a href="/" className="text-amber-500 hover:text-amber-600 font-medium transition-colors">
+          <div style={{ 
+            textAlign: 'center', 
+            marginTop: '32px',
+            paddingTop: '24px',
+            borderTop: '1px solid #e5e7eb'
+          }}>
+            <a 
+              href="/" 
+              style={{ 
+                color: '#f59e0b', 
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '600',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#d97706'}
+              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#f59e0b'}
+            >
               ← Back to Homepage
             </a>
           </div>
