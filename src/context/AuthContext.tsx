@@ -10,6 +10,7 @@ interface User {
   phone: string;
   verified: boolean;
   userType: 'customer' | 'contractor';
+  credits?: number; // Credits for contractors to unlock job details
 }
 
 interface AuthContextType {

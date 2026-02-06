@@ -36,15 +36,21 @@ export default function LoginPage() {
             lastName: lastName || 'User',
             phone: '',
             verified: true,
-            userType: userType
+            userType: userType,
+            credits: userType === 'contractor' ? 500 : 0 // Give contractors 500 free credits
           };
           
           const token = 'user-token-' + newUser.id;
           login(token, newUser);
           
-          alert('Account created successfully!');
+          if (userType === 'contractor') {
+            alert('Welcome to BuildHub! 🎉 You have received 500 free credits to unlock job details!');
+          } else {
+            alert('Account created successfully!');
+          }
+          
           // Redirect based on user type
-          const defaultRedirect = userType === 'contractor' ? '/dashboard' : '/marketplace';
+          const defaultRedirect = userType === 'contractor' ? '/professionals' : '/marketplace';
           const redirectUrl = getRedirectUrl();
           window.location.href = redirectUrl === '/marketplace' ? defaultRedirect : redirectUrl;
         }, 1000);
@@ -529,7 +535,7 @@ export default function LoginPage() {
                 alignItems: 'center',
                 gap: '12px'
               }}>
-                ✨ Member Benefits:
+                ✨ {userType === 'contractor' ? 'Contractor Benefits:' : 'Member Benefits:'}
               </h4>
               <ul style={{ 
                 margin: 0, 
@@ -539,22 +545,45 @@ export default function LoginPage() {
                 fontSize: '17px',
                 lineHeight: '2'
               }}>
-                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
-                  <span style={{ fontWeight: '600' }}>Access to detailed job information</span>
-                </li>
-                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
-                  <span style={{ fontWeight: '600' }}>Interactive map with exact locations</span>
-                </li>
-                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
-                  <span style={{ fontWeight: '600' }}>Direct contact with project owners</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
-                  <span style={{ fontWeight: '600' }}>Apply to multiple jobs instantly</span>
-                </li>
+                {userType === 'contractor' ? (
+                  <>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>🎉</span>
+                      <span style={{ fontWeight: '600' }}>500 FREE credits to unlock job details</span>
+                    </li>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Access to all available jobs</span>
+                    </li>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Client contact information</span>
+                    </li>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Priority job applications</span>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Access to verified professionals</span>
+                    </li>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Post unlimited projects</span>
+                    </li>
+                    <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Direct communication tools</span>
+                    </li>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                      <span style={{ fontWeight: '600' }}>Project management dashboard</span>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           )}

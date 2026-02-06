@@ -125,6 +125,7 @@ export default function BuildHubHomePage() {
                 user.userType === 'contractor' ? (
                   // Contractor Navigation
                   <>
+                    <a href="/jobs" style={{ fontSize: '0.9rem', color: '#374151', textDecoration: 'none', fontWeight: '500', transition: 'color 0.2s' }}>Browse Jobs</a>
                     <a href="/marketplace" style={{ fontSize: '0.9rem', color: '#374151', textDecoration: 'none', fontWeight: '500', transition: 'color 0.2s' }}>Marketplace</a>
                     <a href="/builder-profile" style={{ fontSize: '0.9rem', color: '#374151', textDecoration: 'none', fontWeight: '500', transition: 'color 0.2s' }}>My Builder Profile</a>
                   </>

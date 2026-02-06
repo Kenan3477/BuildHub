@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '../context/AuthContext'
 import { JobsProvider } from '../context/JobsContext'
+import { CreditsProvider } from '../context/CreditsContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,9 +17,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <JobsProvider>
-            {children}
-          </JobsProvider>
+          <CreditsProvider>
+            <JobsProvider>
+              {children}
+            </JobsProvider>
+          </CreditsProvider>
         </AuthProvider>
       </body>
     </html>
