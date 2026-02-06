@@ -121,13 +121,13 @@ export default function LoginPage() {
         borderRadius: '20px', 
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', 
         width: '100%', 
-        maxWidth: '500px',
+        maxWidth: '600px',
         overflow: 'hidden',
         border: '1px solid #e2e8f0'
       }}>
         
         <div style={{ 
-          padding: '40px 32px',
+          padding: '48px 40px',
           background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
         }}>
           {/* Header Section */}
@@ -263,17 +263,19 @@ export default function LoginPage() {
                     onChange={(e) => setFirstName(e.target.value)}
                     required={isSignUp}
                     style={{
-                      padding: '20px',
+                      padding: '16px',
                       border: '2px solid #e2e8f0',
-                      borderRadius: '16px',
-                      fontSize: '18px',
+                      borderRadius: '12px',
+                      fontSize: '16px',
                       backgroundColor: '#ffffff',
                       transition: 'all 0.3s ease',
                       outline: 'none',
                       fontFamily: 'inherit',
                       fontWeight: '500',
                       color: '#0f172a',
-                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                      width: '100%',
+                      boxSizing: 'border-box'
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = '#f59e0b';
@@ -291,17 +293,19 @@ export default function LoginPage() {
                     onChange={(e) => setLastName(e.target.value)}
                     required={isSignUp}
                     style={{
-                      padding: '20px',
+                      padding: '16px',
                       border: '2px solid #e2e8f0',
-                      borderRadius: '16px',
-                      fontSize: '18px',
+                      borderRadius: '12px',
+                      fontSize: '16px',
                       backgroundColor: '#ffffff',
                       transition: 'all 0.3s ease',
                       outline: 'none',
                       fontFamily: 'inherit',
                       fontWeight: '500',
                       color: '#0f172a',
-                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                      width: '100%',
+                      boxSizing: 'border-box'
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = '#f59e0b';
@@ -318,9 +322,9 @@ export default function LoginPage() {
                 <div style={{ marginBottom: '32px' }}>
                   <label style={{ 
                     display: 'block', 
-                    marginBottom: '16px', 
-                    fontSize: '20px', 
-                    fontWeight: '800', 
+                    marginBottom: '12px', 
+                    fontSize: '18px', 
+                    fontWeight: '700', 
                     color: '#0f172a',
                     letterSpacing: '-0.025em'
                   }}>
@@ -329,56 +333,58 @@ export default function LoginPage() {
                   <div style={{ 
                     display: 'grid', 
                     gridTemplateColumns: '1fr 1fr', 
-                    gap: '16px' 
+                    gap: '12px' 
                   }}>
                     <button
                       type="button"
                       onClick={() => setUserType('customer')}
                       style={{
-                        padding: '20px',
+                        padding: '16px 12px',
                         border: `3px solid ${userType === 'customer' ? '#f59e0b' : '#e2e8f0'}`,
                         backgroundColor: userType === 'customer' ? '#fef3c7' : '#ffffff',
-                        borderRadius: '16px',
-                        fontSize: '16px',
-                        fontWeight: '800',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '700',
                         cursor: 'pointer',
                         textAlign: 'center',
                         color: userType === 'customer' ? '#92400e' : '#64748b',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        transform: userType === 'customer' ? 'translateY(-4px)' : 'none',
-                        boxShadow: userType === 'customer' ? '0 20px 25px -5px rgba(245, 158, 11, 0.2), 0 10px 10px -5px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-                        fontFamily: 'inherit'
+                        transform: userType === 'customer' ? 'translateY(-2px)' : 'none',
+                        boxShadow: userType === 'customer' ? '0 10px 15px -3px rgba(245, 158, 11, 0.2), 0 4px 6px -2px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+                        fontFamily: 'inherit',
+                        lineHeight: '1.4'
                       }}
                     >
-                      🏠 Homeowner/Customer
+                      🏠 Homeowner/<br/>Customer
                     </button>
                     <button
                       type="button"
                       onClick={() => setUserType('contractor')}
                       style={{
-                        padding: '20px',
+                        padding: '16px 12px',
                         border: `3px solid ${userType === 'contractor' ? '#f59e0b' : '#e2e8f0'}`,
                         backgroundColor: userType === 'contractor' ? '#fef3c7' : '#ffffff',
-                        borderRadius: '16px',
-                        fontSize: '16px',
-                        fontWeight: '800',
+                        borderRadius: '12px',
+                        fontSize: '14px',
+                        fontWeight: '700',
                         cursor: 'pointer',
                         textAlign: 'center',
                         color: userType === 'contractor' ? '#92400e' : '#64748b',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        transform: userType === 'contractor' ? 'translateY(-4px)' : 'none',
-                        boxShadow: userType === 'contractor' ? '0 20px 25px -5px rgba(245, 158, 11, 0.2), 0 10px 10px -5px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-                        fontFamily: 'inherit'
+                        transform: userType === 'contractor' ? 'translateY(-2px)' : 'none',
+                        boxShadow: userType === 'contractor' ? '0 10px 15px -3px rgba(245, 158, 11, 0.2), 0 4px 6px -2px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+                        fontFamily: 'inherit',
+                        lineHeight: '1.4'
                       }}
                     >
-                      🔨 Professional/Contractor
+                      🔨 Professional/<br/>Contractor
                     </button>
                   </div>
                 </div>
               </div>
             )}
 
-            <div style={{ marginBottom: '32px' }}>
+            <div style={{ marginBottom: '24px' }}>
               <input
                 type="email"
                 placeholder="Email Address"
@@ -387,11 +393,11 @@ export default function LoginPage() {
                 required
                 style={{
                   width: '100%',
-                  padding: '20px',
+                  padding: '16px',
                   border: '2px solid #e2e8f0',
-                  borderRadius: '16px',
-                  fontSize: '18px',
-                  marginBottom: '20px',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  marginBottom: '16px',
                   backgroundColor: '#ffffff',
                   transition: 'all 0.3s ease',
                   outline: 'none',
@@ -419,10 +425,10 @@ export default function LoginPage() {
                 required
                 style={{
                   width: '100%',
-                  padding: '20px',
+                  padding: '16px',
                   border: '2px solid #e2e8f0',
-                  borderRadius: '16px',
-                  fontSize: '18px',
+                  borderRadius: '12px',
+                  fontSize: '16px',
                   backgroundColor: '#ffffff',
                   transition: 'all 0.3s ease',
                   outline: 'none',
@@ -448,31 +454,31 @@ export default function LoginPage() {
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '24px',
+                padding: '18px',
                 backgroundColor: loading ? '#cbd5e1' : (isAdmin && !isSignUp ? '#dc2626' : '#f59e0b'),
                 color: '#ffffff',
                 border: 'none',
-                borderRadius: '16px',
-                fontSize: '20px',
-                fontWeight: '800',
+                borderRadius: '12px',
+                fontSize: '18px',
+                fontWeight: '700',
                 cursor: loading ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: loading ? 'none' : '0 20px 25px -5px rgba(245, 158, 11, 0.4), 0 10px 10px -5px rgba(245, 158, 11, 0.2)',
-                transform: loading ? 'none' : 'translateY(-2px)',
+                boxShadow: loading ? 'none' : '0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.2)',
+                transform: loading ? 'none' : 'translateY(-1px)',
                 letterSpacing: '0.025em',
                 fontFamily: 'inherit',
                 opacity: loading ? '0.6' : '1'
               }}
               onMouseEnter={(e) => {
                 if (!loading) {
-                  (e.target as HTMLButtonElement).style.transform = 'translateY(-4px)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 25px 50px -12px rgba(245, 158, 11, 0.5)';
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 20px 25px -5px rgba(245, 158, 11, 0.5)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!loading) {
-                  (e.target as HTMLButtonElement).style.transform = 'translateY(-2px)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 20px 25px -5px rgba(245, 158, 11, 0.4), 0 10px 10px -5px rgba(245, 158, 11, 0.2)';
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-1px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.2)';
                 }
               }}
             >
