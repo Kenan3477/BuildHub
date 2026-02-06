@@ -1,0 +1,325 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  phone         String?
+  name          String?
+  role          UserRole  @default(CUSTOMER)
+  emailVerified Boolean   @default(false)
+  phoneVerified Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  // Customer specific
+  customer      Customer?
+
+  // Contractor specific  
+  contractor    Contractor?
+
+  // Admin specific
+  isAdmin       Boolean   @default(false)
+
+  // Relations
+  jobs          Job[]
+  quotes        Quote[]
+  reviews       Review[]
+  transactions  Transaction[]
+  messages      Message[]
+
+  @@map("users")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  postcode  String?
+  totalJobs Int      @default(0)
+  avgRating Float?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("customers")
+}
+
+model Contractor {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  businessName     String
+  tradeLicenseNo   String?
+  insuranceExpiry  DateTime?
+  postcode         String
+  serviceRadius    Int      @default(15) // miles
+  specialties      String[] // kitchen, bathroom, extension, etc.
+  hourlyRate       Float?
+  
+  // Verification status
+  tradeVerified    Boolean  @default(false)
+  insuranceVerified Boolean @default(false)
+  backgroundCheck  Boolean  @default(false)
+  verificationLevel VerificationLevel @default(BASIC)
+  
+  // Performance metrics
+  rating           Float    @default(0)
+  totalJobs        Int      @default(0)
+  totalEarnings    Float    @default(0)
+  responseTimeAvg  Int?     // minutes
+  completionRate   Float    @default(0)
+  
+  // Subscription
+  subscriptionPlan SubscriptionPlan @default(FREE)
+  subscriptionExpiry DateTime?
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  quotes           Quote[]
+  reviews          Review[]
+  transactions     Transaction[]
+
+  @@map("contractors")
+}
+
+model Job {
+  id          String    @id @default(cuid())
+  customerId  String
+  customer    User      @relation(fields: [customerId], references: [id])
+  
+  category    JobCategory
+  title       String
+  description String
+  photos      String[]  @default([])
+  
+  // Location
+  postcode    String
+  lat         Float?
+  lng         Float?
+  
+  // Budget and timeline
+  budgetMin   Float?
+  budgetMax   Float?
+  urgency     UrgencyLevel
+  
+  // Status and lifecycle
+  status      JobStatus @default(OPEN)
+  expiresAt   DateTime?
+  completedAt DateTime?
+  
+  // Lead scoring
+  qualityScore     Int      @default(0)
+  priorityLevel    PriorityLevel @default(MEDIUM)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  quotes      Quote[]
+  messages    Message[]
+  transactions Transaction[]
+
+  @@map("jobs")
+}
+
+model Quote {
+  id          String      @id @default(cuid())
+  jobId       String
+  job         Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  contractorId String
+  contractor  User        @relation(fields: [contractorId], references: [id])
+  
+  price       Float
+  timeline    String      // "2-3 weeks"
+  description String
+  materialsIncluded Boolean @default(false)
+  warrantyPeriod    Int?    // months
+  
+  status      QuoteStatus @default(PENDING)
+  viewedAt    DateTime?
+  acceptedAt  DateTime?
+  rejectedAt  DateTime?
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  review      Review?
+
+  @@map("quotes")
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  jobId       String
+  job         Job      @relation(fields: [jobId], references: [id])
+  quoteId     String   @unique
+  quote       Quote    @relation(fields: [quoteId], references: [id])
+  customerId  String
+  customer    User     @relation(fields: [customerId], references: [id])
+  contractorId String
+  contractor  Contractor @relation(fields: [contractorId], references: [id])
+  
+  rating      Int      // 1-5 stars
+  title       String?
+  comment     String?
+  photos      String[] @default([])
+  
+  verified    Boolean  @default(false)
+  helpfulVotes Int     @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  jobId       String?
+  job         Job?              @relation(fields: [jobId], references: [id])
+  customerId  String?
+  customer    User?             @relation(fields: [customerId], references: [id])
+  contractorId String?
+  contractor  Contractor?       @relation(fields: [contractorId], references: [id])
+  
+  type        TransactionType
+  amount      Float
+  feeAmount   Float             @default(0)
+  stripeChargeId String?
+  
+  status      TransactionStatus @default(PENDING)
+  description String?
+  
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("transactions")
+}
+
+model Message {
+  id          String      @id @default(cuid())
+  jobId       String
+  job         Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  senderId    String
+  sender      User        @relation(fields: [senderId], references: [id])
+  
+  content     String
+  attachments String[]    @default([])
+  readAt      DateTime?
+  
+  createdAt   DateTime    @default(now())
+
+  @@map("messages")
+}
+
+model LeadPurchase {
+  id          String   @id @default(cuid())
+  jobId       String
+  contractorId String
+  price       Float
+  purchasedAt DateTime @default(now())
+  
+  // Track lead performance
+  quoteSubmitted Boolean @default(false)
+  jobWon         Boolean @default(false)
+  
+  @@unique([jobId, contractorId])
+  @@map("lead_purchases")
+}
+
+// Enums
+enum UserRole {
+  CUSTOMER
+  CONTRACTOR
+  ADMIN
+}
+
+enum JobCategory {
+  KITCHEN
+  BATHROOM
+  EXTENSION
+  ROOFING
+  ELECTRICAL
+  PLUMBING
+  PAINTING
+  HEATING
+  BUILDING
+  OTHER
+}
+
+enum UrgencyLevel {
+  EMERGENCY
+  THIS_WEEK  
+  THIS_MONTH
+  NEXT_MONTH
+  NEXT_QUARTER
+  PLANNING
+}
+
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum QuoteStatus {
+  PENDING
+  VIEWED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum PriorityLevel {
+  HIGH
+  MEDIUM
+  LOW
+  REJECT
+}
+
+enum VerificationLevel {
+  BASIC
+  ENHANCED
+  PREMIUM
+}
+
+enum SubscriptionPlan {
+  FREE
+  BASIC
+  PRO
+  PREMIUM
+}
+
+enum TransactionType {
+  LEAD_PURCHASE
+  SUBSCRIPTION
+  JOB_PAYMENT
+  REFUND
+  COMMISSION
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}

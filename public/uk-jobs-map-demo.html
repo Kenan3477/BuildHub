@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Construction Jobs Interactive Map - BuildHub</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .map-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .job-count {
+            background: #f59e0b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        #map {
+            height: 600px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .legend {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+        
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .popup-content {
+            min-width: 250px;
+        }
+        
+        .popup-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .popup-type {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .popup-location {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .popup-button {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        
+        .popup-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">🏗️</div>
+        <div>
+            <div class="title">BuildHub Construction Jobs</div>
+            <div class="subtitle">Interactive UK Map - Find Construction Opportunities</div>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <div class="map-container">
+            <div class="map-header">
+                <h2 class="map-title">🇬🇧 UK Construction Jobs Map</h2>
+                <div class="job-count" id="jobCount">Loading jobs...</div>
+            </div>
+            
+            <!-- Interactive Map -->
+            <div id="map"></div>
+            
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-title">Job Types</div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ef4444;"></div>
+                    <span>Residential</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #3b82f6;"></div>
+                    <span>Commercial</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #10b981;"></div>
+                    <span>Infrastructure</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #8b5cf6;"></div>
+                    <span>Industrial</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f59e0b;"></div>
+                    <span>Renovation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Leaflet MarkerCluster JavaScript -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        // Mock construction jobs data
+        const constructionJobs = [
+            {
+                id: 1,
+                title: "Site Manager - Luxury Residential Development",
+                type: "Residential",
+                lat: 51.5074,
+                lng: -0.1278,
+                location: "London, SW1A 1AA",
+                salary: "£45,000 - £55,000",
+                company: "Premier Construction Ltd"
+            },
+            {
+                id: 2,
+                title: "Construction Project Manager",
+                type: "Commercial", 
+                lat: 53.4808,
+                lng: -2.2426,
+                location: "Manchester, M1 1AA",
+                salary: "£50,000 - £65,000",
+                company: "Northern Build Group"
+            },
+            {
+                id: 3,
+                title: "Civil Engineer - Bridge Construction",
+                type: "Infrastructure",
+                lat: 55.9533,
+                lng: -3.1883,
+                location: "Edinburgh, EH1 1YZ",
+                salary: "£40,000 - £50,000",
+                company: "Scottish Infrastructure Partners"
+            },
+            {
+                id: 4,
+                title: "Quantity Surveyor",
+                type: "Commercial",
+                lat: 51.4816,
+                lng: -3.1791,
+                location: "Cardiff, CF10 1EP",
+                salary: "£35,000 - £45,000",
+                company: "Wales Construction Solutions"
+            },
+            {
+                id: 5,
+                title: "Health & Safety Manager",
+                type: "Industrial",
+                lat: 52.4862,
+                lng: -1.8904,
+                location: "Birmingham, B1 1BB",
+                salary: "£42,000 - £52,000",
+                company: "Midlands Industrial Build"
+            },
+            {
+                id: 6,
+                title: "Architect - Heritage Restoration",
+                type: "Renovation",
+                lat: 53.7596,
+                lng: -2.6998,
+                location: "Preston, PR1 1HT",
+                salary: "£38,000 - £48,000",
+                company: "Heritage Restoration Specialists"
+            },
+            {
+                id: 7,
+                title: "Construction Manager - Shopping Centre",
+                type: "Commercial",
+                lat: 54.9783,
+                lng: -1.6178,
+                location: "Newcastle, NE1 4ST",
+                salary: "£55,000 - £70,000",
+                company: "Northeast Commercial Builders"
+            },
+            {
+                id: 8,
+                title: "Structural Engineer",
+                type: "Residential",
+                lat: 50.3755,
+                lng: -4.1427,
+                location: "Plymouth, PL1 1EA",
+                salary: "£40,000 - £50,000",
+                company: "Southwest Engineering Ltd"
+            },
+            {
+                id: 9,
+                title: "Road Construction Supervisor",
+                type: "Infrastructure",
+                lat: 51.3758,
+                lng: -2.3599,
+                location: "Bath, BA1 1LN",
+                salary: "£35,000 - £42,000",
+                company: "Highway Construction Group"
+            },
+            {
+                id: 10,
+                title: "Building Services Engineer",
+                type: "Industrial",
+                lat: 53.2734,
+                lng: -9.0490,
+                location: "Galway, Ireland",
+                salary: "€45,000 - €55,000",
+                company: "Celtic Industrial Solutions"
+            }
+        ];
+
+        // Job type color mapping
+        const jobTypeColors = {
+            'Residential': '#ef4444',
+            'Commercial': '#3b82f6', 
+            'Infrastructure': '#10b981',
+            'Industrial': '#8b5cf6',
+            'Renovation': '#f59e0b'
+        };
+
+        // Initialize map centered on UK
+        const map = L.map('map').setView([54.5, -2.0], 6);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18,
+            minZoom: 5
+        }).addTo(map);
+
+        // Restrict map bounds to UK area
+        const ukBounds = L.latLngBounds([49.5, -11.0], [61.0, 2.0]);
+        map.setMaxBounds(ukBounds);
+
+        // Create marker cluster group
+        const markers = L.markerClusterGroup({
+            chunkedLoading: true,
+            spiderfyOnMaxZoom: false,
+            showCoverageOnHover: true,
+            zoomToBoundsOnClick: true,
+            maxClusterRadius: 50
+        });
+
+        // Function to create custom marker icon
+        function createMarkerIcon(jobType) {
+            const color = jobTypeColors[jobType] || '#6b7280';
+            return L.divIcon({
+                html: `
+                    <div style="
+                        width: 25px; 
+                        height: 25px; 
+                        background-color: ${color}; 
+                        border: 3px solid white; 
+                        border-radius: 50%; 
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-weight: bold;
+                        font-size: 12px;
+                    ">
+                        🏗️
+                    </div>
+                `,
+                className: 'custom-marker',
+                iconSize: [25, 25],
+                iconAnchor: [12, 12]
+            });
+        }
+
+        // Function to create popup content
+        function createPopupContent(job) {
+            return `
+                <div class="popup-content">
+                    <div class="popup-title">${job.title}</div>
+                    <div class="popup-type">${job.type}</div>
+                    <div class="popup-location">
+                        📍 ${job.location}
+                    </div>
+                    <div style="margin-bottom: 0.5rem;">
+                        <strong>Salary:</strong> ${job.salary}
+                    </div>
+                    <div style="margin-bottom: 1rem; color: #6b7280;">
+                        <strong>Company:</strong> ${job.company}
+                    </div>
+                    <button class="popup-button" onclick="viewJob(${job.id})">
+                        View Job Details →
+                    </button>
+                </div>
+            `;
+        }
+
+        // Add markers to the map
+        constructionJobs.forEach(job => {
+            const marker = L.marker([job.lat, job.lng], {
+                icon: createMarkerIcon(job.type)
+            }).bindPopup(createPopupContent(job));
+            
+            markers.addLayer(marker);
+        });
+
+        // Add marker cluster to map
+        map.addLayer(markers);
+
+        // Update job count
+        document.getElementById('jobCount').textContent = `${constructionJobs.length} Active Jobs`;
+
+        // Function to handle job viewing (placeholder)
+        function viewJob(jobId) {
+            alert(`Opening job details for Job ID: ${jobId}\n\nIn a real application, this would:\n- Navigate to job details page\n- Open job application form\n- Show full job description\n- Display company information`);
+        }
+
+        // Add map controls
+        map.addControl(new L.Control.Zoom({ position: 'topright' }));
+        
+        // Custom control for reset view
+        const resetControl = L.control({ position: 'topright' });
+        resetControl.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            div.innerHTML = '<a href="#" title="Reset View" style="background: white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #333;">🏠</a>';
+            div.onclick = function() {
+                map.setView([54.5, -2.0], 6);
+            };
+            return div;
+        };
+        resetControl.addTo(map);
+
+        // Log for debugging
+        console.log('UK Construction Jobs Map initialized');
+        console.log(`Loaded ${constructionJobs.length} construction jobs`);
+    </script>
+</body>
+</html>
