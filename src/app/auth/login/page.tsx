@@ -106,277 +106,183 @@ export default function LoginPage() {
   const isAdmin = email === 'Kennen_02@icloud.com';
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-      <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.15)', padding: '40px', width: '100%', maxWidth: '450px' }}>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-5">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md">
         
-        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <div style={{ 
-            width: '60px', 
-            height: '60px', 
-            backgroundColor: isAdmin ? '#dc2626' : '#f59e0b', 
-            borderRadius: '50%', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            margin: '0 auto 20px',
-            fontSize: '24px'
-          }}>
-            {isAdmin ? '🛡️' : '🏗️'}
-          </div>
-          
-          <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#111827', marginBottom: '8px' }}>
-            {isSignUp ? 'Join BuildHub' : (isAdmin ? 'Admin Access' : 'Welcome Back')}
-          </h1>
-          
-          <p style={{ color: '#6b7280' }}>
-            {isSignUp 
-              ? 'Create your account to access construction jobs' 
-              : (isAdmin ? 'Administrative Dashboard Access' : 'Sign in to BuildHub')
-            }
-          </p>
-
-          {isAdmin && !isSignUp && (
-            <div style={{ 
-              backgroundColor: '#fef3c7', 
-              border: '1px solid #f59e0b', 
-              borderRadius: '8px', 
-              padding: '12px', 
-              margin: '16px 0',
-              fontSize: '14px',
-              color: '#92400e'
-            }}>
-              🔐 <strong>Admin Mode Detected</strong>
+        <div className="p-8">
+          <div className="text-center mb-8">
+            <div className={`w-16 h-16 ${isAdmin ? 'bg-red-600' : 'bg-amber-500'} rounded-full flex items-center justify-center mx-auto mb-4 text-2xl`}>
+              {isAdmin ? '🛡️' : '🏗️'}
             </div>
-          )}
-        </div>
+            
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              {isSignUp ? 'Join BuildHub' : (isAdmin ? 'Admin Access' : 'Welcome Back')}
+            </h1>
+            
+            <p className="text-gray-600">
+              {isSignUp 
+                ? 'Create your account to access construction jobs' 
+                : (isAdmin ? 'Administrative Dashboard Access' : 'Sign in to BuildHub')
+              }
+            </p>
 
-        {/* Sign Up / Sign In Toggle */}
-        <div style={{ 
-          display: 'flex', 
-          backgroundColor: '#f3f4f6', 
-          borderRadius: '8px', 
-          padding: '4px',
-          marginBottom: '24px'
-        }}>
-          <button
-            type="button"
-            onClick={() => setIsSignUp(false)}
-            style={{
-              flex: 1,
-              padding: '10px',
-              border: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              backgroundColor: !isSignUp ? '#f59e0b' : 'transparent',
-              color: !isSignUp ? 'white' : '#6b7280',
-              transition: 'all 0.2s'
-            }}
-          >
-            Sign In
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsSignUp(true)}
-            style={{
-              flex: 1,
-              padding: '10px',
-              border: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              backgroundColor: isSignUp ? '#f59e0b' : 'transparent',
-              color: isSignUp ? 'white' : '#6b7280',
-              transition: 'all 0.2s'
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          {/* Sign Up Fields */}
-          {isSignUp && (
-            <>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required={isSignUp}
-                  style={{
-                    padding: '12px',
-                    border: '2px solid #e5e7eb',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    boxSizing: 'border-box'
-                  }}
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required={isSignUp}
-                  style={{
-                    padding: '12px',
-                    border: '2px solid #e5e7eb',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    boxSizing: 'border-box'
-                  }}
-                />
+            {isAdmin && !isSignUp && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-4 text-sm text-amber-800">
+                🔐 <strong>Admin Mode Detected</strong>
               </div>
-              
-              {/* User Type Selection */}
-              <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600', color: '#374151' }}>
-                  I am a:
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <button
-                    type="button"
-                    onClick={() => setUserType('customer')}
-                    style={{
-                      padding: '12px',
-                      border: `2px solid ${userType === 'customer' ? '#f59e0b' : '#e5e7eb'}`,
-                      backgroundColor: userType === 'customer' ? '#fef3c7' : 'white',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      color: userType === 'customer' ? '#92400e' : '#6b7280'
-                    }}
-                  >
-                    🏠 Homeowner/Customer
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setUserType('contractor')}
-                    style={{
-                      padding: '12px',
-                      border: `2px solid ${userType === 'contractor' ? '#f59e0b' : '#e5e7eb'}`,
-                      backgroundColor: userType === 'contractor' ? '#fef3c7' : 'white',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      color: userType === 'contractor' ? '#92400e' : '#6b7280'
-                    }}
-                  >
-                    🔨 Professional/Contractor
-                  </button>
+            )}
+          </div>
+
+          {/* Sign Up / Sign In Toggle */}
+          <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
+            <button
+              type="button"
+              onClick={() => setIsSignUp(false)}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                !isSignUp 
+                  ? 'bg-amber-500 text-white shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsSignUp(true)}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                isSignUp 
+                  ? 'bg-amber-500 text-white shadow-sm' 
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            {/* Sign Up Fields */}
+            {isSignUp && (
+              <div className="space-y-5 mb-6">
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required={isSignUp}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required={isSignUp}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+                  />
+                </div>
+                
+                {/* User Type Selection */}
+                <div>
+                  <label className="block mb-2 text-sm font-semibold text-gray-700">
+                    I am a:
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setUserType('customer')}
+                      className={`p-3 border-2 rounded-lg text-sm font-semibold text-center transition-all duration-200 ${
+                        userType === 'customer' 
+                          ? 'border-amber-500 bg-amber-50 text-amber-800' 
+                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      🏠 Homeowner/Customer
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setUserType('contractor')}
+                      className={`p-3 border-2 rounded-lg text-sm font-semibold text-center transition-all duration-200 ${
+                        userType === 'contractor' 
+                          ? 'border-amber-500 bg-amber-50 text-amber-800' 
+                          : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                      }`}
+                    >
+                      🔨 Professional/Contractor
+                    </button>
+                  </div>
                 </div>
               </div>
-            </>
+            )}
+
+            <div className="space-y-4 mb-6">
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+              />
+              
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:outline-none transition-colors"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full py-3 px-4 rounded-lg text-white font-semibold text-lg transition-all duration-200 ${
+                loading 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : isAdmin && !isSignUp 
+                    ? 'bg-red-600 hover:bg-red-700'
+                    : 'bg-amber-500 hover:bg-amber-600 shadow-lg hover:shadow-xl'
+              }`}
+            >
+              {loading 
+                ? (isSignUp ? 'Creating Account...' : 'Signing In...')
+                : (isSignUp 
+                    ? '🚀 Create Account' 
+                    : (isAdmin ? '🔐 Admin Sign In' : 'Sign In')
+                  )
+              }
+            </button>
+          </form>
+
+          {/* Admin Credentials Display */}
+          {isAdmin && !isSignUp && (
+            <div className="mt-6 p-4 bg-gray-100 rounded-lg text-sm">
+              <strong>Admin Credentials:</strong><br />
+              Email: Kennen_02@icloud.com<br />
+              Password: Kenan3477!
+            </div>
           )}
 
-          <div style={{ marginBottom: '20px' }}>
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '2px solid #e5e7eb',
-                borderRadius: '8px',
-                fontSize: '16px',
-                boxSizing: 'border-box'
-              }}
-            />
+          {/* Sign Up Benefits */}
+          {isSignUp && (
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="text-sm font-semibold text-blue-800 mb-2">✨ Member Benefits:</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• Access to detailed job information</li>
+                <li>• Interactive map with exact locations</li>
+                <li>• Direct contact with project owners</li>
+                <li>• Apply to multiple jobs instantly</li>
+              </ul>
+            </div>
+          )}
+
+          <div className="text-center mt-6">
+            <a href="/" className="text-amber-500 hover:text-amber-600 font-medium transition-colors">
+              ← Back to Homepage
+            </a>
           </div>
-
-          <div style={{ marginBottom: '24px' }}>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '12px',
-                border: '2px solid #e5e7eb',
-                borderRadius: '8px',
-                fontSize: '16px',
-                boxSizing: 'border-box'
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '14px',
-              backgroundColor: loading ? '#d1d5db' : (isAdmin && !isSignUp ? '#dc2626' : '#f59e0b'),
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'all 0.2s'
-            }}
-          >
-            {loading 
-              ? (isSignUp ? 'Creating Account...' : 'Signing In...')
-              : (isSignUp 
-                  ? '🚀 Create Account' 
-                  : (isAdmin ? '🔐 Admin Sign In' : 'Sign In')
-                )
-            }
-          </button>
-        </form>
-
-        {/* Admin Credentials Display */}
-        {isAdmin && !isSignUp && (
-          <div style={{ 
-            marginTop: '24px', 
-            padding: '16px', 
-            backgroundColor: '#f3f4f6', 
-            borderRadius: '8px',
-            fontSize: '14px'
-          }}>
-            <strong>Admin Credentials:</strong><br />
-            Email: Kennen_02@icloud.com<br />
-            Password: Kenan3477!
-          </div>
-        )}
-
-        {/* Sign Up Benefits */}
-        {isSignUp && (
-          <div style={{ 
-            marginTop: '24px', 
-            padding: '16px', 
-            backgroundColor: '#f0f9ff', 
-            borderRadius: '8px',
-            fontSize: '14px',
-            border: '1px solid #e0f2fe'
-          }}>
-            <h4 style={{ margin: '0 0 8px 0', color: '#0369a1', fontSize: '14px' }}>✨ Member Benefits:</h4>
-            <ul style={{ margin: 0, paddingLeft: '16px', color: '#374151' }}>
-              <li>Access to detailed job information</li>
-              <li>Interactive map with exact locations</li>
-              <li>Direct contact with project owners</li>
-              <li>Apply to multiple jobs instantly</li>
-            </ul>
-          </div>
-        )}
-
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          <a href="/" style={{ color: '#f59e0b', textDecoration: 'none' }}>
-            ← Back to Homepage
-          </a>
         </div>
       </div>
     </div>
