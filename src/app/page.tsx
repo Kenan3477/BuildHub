@@ -139,7 +139,6 @@ export default function BuildHubHomePage() {
               ) : (
                 // Non-authenticated users see general navigation
                 <>
-                  <a href="/professionals" style={{ fontSize: '0.9rem', color: '#374151', textDecoration: 'none', fontWeight: '500', transition: 'color 0.2s' }}>Find Professionals</a>
                   <button onClick={handlePostProject} style={{ fontSize: '0.9rem', color: '#374151', textDecoration: 'none', fontWeight: '500', transition: 'color 0.2s', background: 'none', border: 'none', cursor: 'pointer' }}>Post Project</button>
                 </>
               )}

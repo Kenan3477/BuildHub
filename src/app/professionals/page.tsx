@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Star, MapPin, Clock, DollarSign, Phone, Mail, Award, Users, Calendar, Filter, Search } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -170,6 +170,15 @@ const ratingOptions = ["All Ratings", "4.5+ Stars", "4.0+ Stars", "3.5+ Stars"];
 
 export default function ProfessionalsPage() {
   const { isAuthenticated, user } = useAuth();
+  
+  // Redirect non-authenticated users to login
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = '/auth/login?redirect=' + encodeURIComponent('/professionals');
+      return;
+    }
+  }, [isAuthenticated]);
+
   const [selectedProfessional, setSelectedProfessional] = useState<typeof professionals[0] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
