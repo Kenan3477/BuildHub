@@ -108,53 +108,67 @@ export default function LoginPage() {
   return (
     <div style={{ 
       minHeight: '100vh', 
-      backgroundColor: '#f8fafc', 
+      backgroundColor: '#f1f5f9', 
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center', 
       padding: '20px',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      boxSizing: 'border-box'
     }}>
       <div style={{ 
-        backgroundColor: 'white', 
-        borderRadius: '16px', 
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', 
+        backgroundColor: '#ffffff', 
+        borderRadius: '20px', 
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', 
         width: '100%', 
-        maxWidth: '480px',
-        overflow: 'hidden'
+        maxWidth: '500px',
+        overflow: 'hidden',
+        border: '1px solid #e2e8f0'
       }}>
         
-        <div style={{ padding: '48px 32px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ 
+          padding: '40px 32px',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
+        }}>
+          {/* Header Section */}
+          <div style={{ 
+            textAlign: 'center', 
+            marginBottom: '40px',
+            borderBottom: '1px solid #e2e8f0',
+            paddingBottom: '32px'
+          }}>
             <div style={{ 
-              width: '64px', 
-              height: '64px', 
+              width: '80px', 
+              height: '80px', 
               backgroundColor: isAdmin ? '#dc2626' : '#f59e0b', 
               borderRadius: '50%', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
               margin: '0 auto 24px',
-              fontSize: '28px',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+              fontSize: '32px',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+              border: '4px solid white'
             }}>
               {isAdmin ? '🛡️' : '🏗️'}
             </div>
             
             <h1 style={{ 
-              fontSize: '28px', 
-              fontWeight: '800', 
-              color: '#111827', 
-              marginBottom: '8px',
-              lineHeight: '1.2'
+              fontSize: '32px', 
+              fontWeight: '900', 
+              color: '#0f172a', 
+              marginBottom: '12px',
+              lineHeight: '1.2',
+              letterSpacing: '-0.025em'
             }}>
               {isSignUp ? 'Join BuildHub' : (isAdmin ? 'Admin Access' : 'Welcome Back')}
             </h1>
             
             <p style={{ 
-              color: '#6b7280',
-              fontSize: '16px',
-              lineHeight: '1.5'
+              color: '#64748b',
+              fontSize: '18px',
+              lineHeight: '1.6',
+              fontWeight: '500'
             }}>
               {isSignUp 
                 ? 'Create your account to access construction jobs' 
@@ -166,12 +180,12 @@ export default function LoginPage() {
               <div style={{ 
                 backgroundColor: '#fef3c7', 
                 border: '2px solid #f59e0b', 
-                borderRadius: '12px', 
-                padding: '16px', 
-                margin: '20px 0',
-                fontSize: '14px',
+                borderRadius: '16px', 
+                padding: '20px', 
+                margin: '24px 0 0 0',
+                fontSize: '16px',
                 color: '#92400e',
-                fontWeight: '600'
+                fontWeight: '700'
               }}>
                 🔐 <strong>Admin Mode Detected</strong>
               </div>
@@ -181,27 +195,30 @@ export default function LoginPage() {
           {/* Sign Up / Sign In Toggle */}
           <div style={{ 
             display: 'flex', 
-            backgroundColor: '#f3f4f6', 
-            borderRadius: '12px', 
-            padding: '6px',
-            marginBottom: '32px',
-            boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+            backgroundColor: '#f1f5f9', 
+            borderRadius: '16px', 
+            padding: '8px',
+            marginBottom: '40px',
+            boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+            border: '1px solid #e2e8f0'
           }}>
             <button
               type="button"
               onClick={() => setIsSignUp(false)}
               style={{
                 flex: 1,
-                padding: '12px 16px',
+                padding: '16px 20px',
                 border: 'none',
-                borderRadius: '8px',
-                fontSize: '16px',
-                fontWeight: '600',
+                borderRadius: '12px',
+                fontSize: '18px',
+                fontWeight: '700',
                 cursor: 'pointer',
                 backgroundColor: !isSignUp ? '#f59e0b' : 'transparent',
-                color: !isSignUp ? 'white' : '#6b7280',
-                transition: 'all 0.3s ease',
-                boxShadow: !isSignUp ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                color: !isSignUp ? '#ffffff' : '#64748b',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: !isSignUp ? '0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.1)' : 'none',
+                transform: !isSignUp ? 'translateY(-2px)' : 'none',
+                fontFamily: 'inherit'
               }}
             >
               Sign In
@@ -211,16 +228,18 @@ export default function LoginPage() {
               onClick={() => setIsSignUp(true)}
               style={{
                 flex: 1,
-                padding: '12px 16px',
+                padding: '16px 20px',
                 border: 'none',
-                borderRadius: '8px',
-                fontSize: '16px',
-                fontWeight: '600',
+                borderRadius: '12px',
+                fontSize: '18px',
+                fontWeight: '700',
                 cursor: 'pointer',
                 backgroundColor: isSignUp ? '#f59e0b' : 'transparent',
-                color: isSignUp ? 'white' : '#6b7280',
-                transition: 'all 0.3s ease',
-                boxShadow: isSignUp ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                color: isSignUp ? '#ffffff' : '#64748b',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: isSignUp ? '0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.1)' : 'none',
+                transform: isSignUp ? 'translateY(-2px)' : 'none',
+                fontFamily: 'inherit'
               }}
             >
               Sign Up
@@ -230,12 +249,12 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit}>
             {/* Sign Up Fields */}
             {isSignUp && (
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: '32px' }}>
                 <div style={{ 
                   display: 'grid', 
                   gridTemplateColumns: '1fr 1fr', 
-                  gap: '16px', 
-                  marginBottom: '24px' 
+                  gap: '20px', 
+                  marginBottom: '32px' 
                 }}>
                   <input
                     type="text"
@@ -244,16 +263,26 @@ export default function LoginPage() {
                     onChange={(e) => setFirstName(e.target.value)}
                     required={isSignUp}
                     style={{
-                      padding: '16px',
-                      border: '2px solid #e5e7eb',
-                      borderRadius: '12px',
-                      fontSize: '16px',
-                      backgroundColor: '#fafafa',
+                      padding: '20px',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '16px',
+                      fontSize: '18px',
+                      backgroundColor: '#ffffff',
                       transition: 'all 0.3s ease',
-                      outline: 'none'
+                      outline: 'none',
+                      fontFamily: 'inherit',
+                      fontWeight: '500',
+                      color: '#0f172a',
+                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
-                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = '#f59e0b';
+                      e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = '#e2e8f0';
+                      e.target.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+                    }}
                   />
                   <input
                     type="text"
@@ -262,51 +291,63 @@ export default function LoginPage() {
                     onChange={(e) => setLastName(e.target.value)}
                     required={isSignUp}
                     style={{
-                      padding: '16px',
-                      border: '2px solid #e5e7eb',
-                      borderRadius: '12px',
-                      fontSize: '16px',
-                      backgroundColor: '#fafafa',
+                      padding: '20px',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '16px',
+                      fontSize: '18px',
+                      backgroundColor: '#ffffff',
                       transition: 'all 0.3s ease',
-                      outline: 'none'
+                      outline: 'none',
+                      fontFamily: 'inherit',
+                      fontWeight: '500',
+                      color: '#0f172a',
+                      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
-                    onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = '#f59e0b';
+                      e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = '#e2e8f0';
+                      e.target.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+                    }}
                   />
                 </div>
                 
                 {/* User Type Selection */}
-                <div style={{ marginBottom: '24px' }}>
+                <div style={{ marginBottom: '32px' }}>
                   <label style={{ 
                     display: 'block', 
-                    marginBottom: '12px', 
-                    fontSize: '16px', 
-                    fontWeight: '700', 
-                    color: '#374151' 
+                    marginBottom: '16px', 
+                    fontSize: '20px', 
+                    fontWeight: '800', 
+                    color: '#0f172a',
+                    letterSpacing: '-0.025em'
                   }}>
                     I am a:
                   </label>
                   <div style={{ 
                     display: 'grid', 
                     gridTemplateColumns: '1fr 1fr', 
-                    gap: '12px' 
+                    gap: '16px' 
                   }}>
                     <button
                       type="button"
                       onClick={() => setUserType('customer')}
                       style={{
-                        padding: '16px',
-                        border: `3px solid ${userType === 'customer' ? '#f59e0b' : '#e5e7eb'}`,
-                        backgroundColor: userType === 'customer' ? '#fef3c7' : '#fafafa',
-                        borderRadius: '12px',
-                        fontSize: '14px',
-                        fontWeight: '700',
+                        padding: '20px',
+                        border: `3px solid ${userType === 'customer' ? '#f59e0b' : '#e2e8f0'}`,
+                        backgroundColor: userType === 'customer' ? '#fef3c7' : '#ffffff',
+                        borderRadius: '16px',
+                        fontSize: '16px',
+                        fontWeight: '800',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        color: userType === 'customer' ? '#92400e' : '#6b7280',
-                        transition: 'all 0.3s ease',
-                        transform: userType === 'customer' ? 'translateY(-2px)' : 'none',
-                        boxShadow: userType === 'customer' ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                        color: userType === 'customer' ? '#92400e' : '#64748b',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        transform: userType === 'customer' ? 'translateY(-4px)' : 'none',
+                        boxShadow: userType === 'customer' ? '0 20px 25px -5px rgba(245, 158, 11, 0.2), 0 10px 10px -5px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+                        fontFamily: 'inherit'
                       }}
                     >
                       🏠 Homeowner/Customer
@@ -315,18 +356,19 @@ export default function LoginPage() {
                       type="button"
                       onClick={() => setUserType('contractor')}
                       style={{
-                        padding: '16px',
-                        border: `3px solid ${userType === 'contractor' ? '#f59e0b' : '#e5e7eb'}`,
-                        backgroundColor: userType === 'contractor' ? '#fef3c7' : '#fafafa',
-                        borderRadius: '12px',
-                        fontSize: '14px',
-                        fontWeight: '700',
+                        padding: '20px',
+                        border: `3px solid ${userType === 'contractor' ? '#f59e0b' : '#e2e8f0'}`,
+                        backgroundColor: userType === 'contractor' ? '#fef3c7' : '#ffffff',
+                        borderRadius: '16px',
+                        fontSize: '16px',
+                        fontWeight: '800',
                         cursor: 'pointer',
                         textAlign: 'center',
-                        color: userType === 'contractor' ? '#92400e' : '#6b7280',
-                        transition: 'all 0.3s ease',
-                        transform: userType === 'contractor' ? 'translateY(-2px)' : 'none',
-                        boxShadow: userType === 'contractor' ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                        color: userType === 'contractor' ? '#92400e' : '#64748b',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        transform: userType === 'contractor' ? 'translateY(-4px)' : 'none',
+                        boxShadow: userType === 'contractor' ? '0 20px 25px -5px rgba(245, 158, 11, 0.2), 0 10px 10px -5px rgba(245, 158, 11, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+                        fontFamily: 'inherit'
                       }}
                     >
                       🔨 Professional/Contractor
@@ -336,7 +378,7 @@ export default function LoginPage() {
               </div>
             )}
 
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '32px' }}>
               <input
                 type="email"
                 placeholder="Email Address"
@@ -345,18 +387,28 @@ export default function LoginPage() {
                 required
                 style={{
                   width: '100%',
-                  padding: '16px',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '12px',
-                  fontSize: '16px',
-                  marginBottom: '16px',
-                  backgroundColor: '#fafafa',
+                  padding: '20px',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '16px',
+                  fontSize: '18px',
+                  marginBottom: '20px',
+                  backgroundColor: '#ffffff',
                   transition: 'all 0.3s ease',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  fontFamily: 'inherit',
+                  fontWeight: '500',
+                  color: '#0f172a',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
-                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#f59e0b';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+                }}
               />
               
               <input
@@ -367,17 +419,27 @@ export default function LoginPage() {
                 required
                 style={{
                   width: '100%',
-                  padding: '16px',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '12px',
-                  fontSize: '16px',
-                  backgroundColor: '#fafafa',
+                  padding: '20px',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '16px',
+                  fontSize: '18px',
+                  backgroundColor: '#ffffff',
                   transition: 'all 0.3s ease',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  fontFamily: 'inherit',
+                  fontWeight: '500',
+                  color: '#0f172a',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
-                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#f59e0b';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+                }}
               />
             </div>
 
@@ -386,37 +448,39 @@ export default function LoginPage() {
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '18px',
-                backgroundColor: loading ? '#d1d5db' : (isAdmin && !isSignUp ? '#dc2626' : '#f59e0b'),
-                color: 'white',
+                padding: '24px',
+                backgroundColor: loading ? '#cbd5e1' : (isAdmin && !isSignUp ? '#dc2626' : '#f59e0b'),
+                color: '#ffffff',
                 border: 'none',
-                borderRadius: '12px',
-                fontSize: '18px',
-                fontWeight: '700',
+                borderRadius: '16px',
+                fontSize: '20px',
+                fontWeight: '800',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease',
-                boxShadow: loading ? 'none' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                transform: loading ? 'none' : 'translateY(-1px)',
-                letterSpacing: '0.5px'
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: loading ? 'none' : '0 20px 25px -5px rgba(245, 158, 11, 0.4), 0 10px 10px -5px rgba(245, 158, 11, 0.2)',
+                transform: loading ? 'none' : 'translateY(-2px)',
+                letterSpacing: '0.025em',
+                fontFamily: 'inherit',
+                opacity: loading ? '0.6' : '1'
               }}
               onMouseEnter={(e) => {
                 if (!loading) {
-                  (e.target as HTMLButtonElement).style.transform = 'translateY(-2px)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1)';
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-4px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 25px 50px -12px rgba(245, 158, 11, 0.5)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!loading) {
-                  (e.target as HTMLButtonElement).style.transform = 'translateY(-1px)';
-                  (e.target as HTMLButtonElement).style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+                  (e.target as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                  (e.target as HTMLButtonElement).style.boxShadow = '0 20px 25px -5px rgba(245, 158, 11, 0.4), 0 10px 10px -5px rgba(245, 158, 11, 0.2)';
                 }
               }}
             >
               {loading 
-                ? (isSignUp ? 'Creating Account...' : 'Signing In...')
+                ? (isSignUp ? '🔄 Creating Account...' : '🔄 Signing In...')
                 : (isSignUp 
                     ? '🚀 Create Account' 
-                    : (isAdmin ? '🔐 Admin Sign In' : 'Sign In')
+                    : (isAdmin ? '🔐 Admin Sign In' : '✨ Sign In')
                   )
               }
             </button>
@@ -426,16 +490,17 @@ export default function LoginPage() {
           {isAdmin && !isSignUp && (
             <div style={{ 
               marginTop: '32px', 
-              padding: '20px', 
-              backgroundColor: '#f9fafb', 
-              borderRadius: '12px',
-              fontSize: '14px',
-              border: '2px solid #e5e7eb',
-              lineHeight: '1.6'
+              padding: '24px', 
+              backgroundColor: '#f8fafc', 
+              borderRadius: '16px',
+              fontSize: '16px',
+              border: '2px solid #e2e8f0',
+              lineHeight: '1.8',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}>
-              <strong style={{ color: '#374151' }}>Admin Credentials:</strong><br />
-              <span style={{ fontFamily: 'monospace', color: '#6b7280' }}>Email: Kennen_02@icloud.com</span><br />
-              <span style={{ fontFamily: 'monospace', color: '#6b7280' }}>Password: Kenan3477!</span>
+              <strong style={{ color: '#0f172a', fontSize: '18px' }}>Admin Credentials:</strong><br />
+              <span style={{ fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace', color: '#64748b', fontSize: '16px' }}>Email: Kennen_02@icloud.com</span><br />
+              <span style={{ fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace', color: '#64748b', fontSize: '16px' }}>Password: Kenan3477!</span>
             </div>
           )}
 
@@ -443,20 +508,20 @@ export default function LoginPage() {
           {isSignUp && (
             <div style={{ 
               marginTop: '32px', 
-              padding: '24px', 
-              backgroundColor: '#f0f9ff', 
-              borderRadius: '16px',
-              border: '2px solid #dbeafe',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
+              padding: '32px', 
+              background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
+              borderRadius: '20px',
+              border: '2px solid #3b82f6',
+              boxShadow: '0 10px 15px -3px rgba(59, 130, 246, 0.3)'
             }}>
               <h4 style={{ 
-                margin: '0 0 16px 0', 
-                color: '#0369a1', 
-                fontSize: '16px', 
-                fontWeight: '700',
+                margin: '0 0 20px 0', 
+                color: '#1e40af', 
+                fontSize: '20px', 
+                fontWeight: '800',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '12px'
               }}>
                 ✨ Member Benefits:
               </h4>
@@ -464,25 +529,25 @@ export default function LoginPage() {
                 margin: 0, 
                 paddingLeft: '0', 
                 listStyle: 'none',
-                color: '#374151',
-                fontSize: '15px',
-                lineHeight: '1.8'
+                color: '#1e293b',
+                fontSize: '17px',
+                lineHeight: '2'
               }}>
-                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
-                  Access to detailed job information
+                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontWeight: '600' }}>Access to detailed job information</span>
                 </li>
-                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
-                  Interactive map with exact locations
+                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontWeight: '600' }}>Interactive map with exact locations</span>
                 </li>
-                <li style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
-                  Direct contact with project owners
+                <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontWeight: '600' }}>Direct contact with project owners</span>
                 </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
-                  Apply to multiple jobs instantly
+                <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
+                  <span style={{ fontWeight: '600' }}>Apply to multiple jobs instantly</span>
                 </li>
               </ul>
             </div>
@@ -490,21 +555,34 @@ export default function LoginPage() {
 
           <div style={{ 
             textAlign: 'center', 
-            marginTop: '32px',
-            paddingTop: '24px',
-            borderTop: '1px solid #e5e7eb'
+            marginTop: '40px',
+            paddingTop: '32px',
+            borderTop: '2px solid #e2e8f0'
           }}>
             <a 
               href="/" 
               style={{ 
                 color: '#f59e0b', 
                 textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '600',
-                transition: 'color 0.3s ease'
+                fontSize: '18px',
+                fontWeight: '700',
+                transition: 'all 0.3s ease',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                border: '2px solid transparent'
               }}
-              onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = '#d97706'}
-              onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = '#f59e0b'}
+              onMouseEnter={(e) => {
+                (e.target as HTMLAnchorElement).style.color = '#ffffff';
+                (e.target as HTMLAnchorElement).style.backgroundColor = '#f59e0b';
+                (e.target as HTMLAnchorElement).style.borderColor = '#f59e0b';
+                (e.target as HTMLAnchorElement).style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLAnchorElement).style.color = '#f59e0b';
+                (e.target as HTMLAnchorElement).style.backgroundColor = 'transparent';
+                (e.target as HTMLAnchorElement).style.borderColor = 'transparent';
+                (e.target as HTMLAnchorElement).style.transform = 'none';
+              }}
             >
               ← Back to Homepage
             </a>
