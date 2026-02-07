@@ -58,50 +58,7 @@ export default function QuoteManagementPage({ params }: { params: { id: string }
     deadline: new Date('2026-03-15')
   }
 
-  const mockQuotes: Quote[] = [
-    {
-      id: '1',
-      contractorName: 'Elite Kitchen Specialists',
-      contractorRating: 4.9,
-      amount: 24500,
-      timeframe: '4-5 weeks',
-      description: 'Complete kitchen extension including structural work, electrical, plumbing, and high-end finishes.',
-      includes: ['Planning permission assistance', 'Structural calculations', 'Premium granite countertops', 'Bosch appliances package', '2-year warranty'],
-      submittedAt: new Date('2026-01-21'),
-      validUntil: new Date('2026-02-05'),
-      status: 'pending',
-      contractorId: '2',
-      responseTime: '2 hours'
-    },
-    {
-      id: '2',
-      contractorName: 'London Home Builders',
-      contractorRating: 4.7,
-      amount: 22800,
-      timeframe: '5-6 weeks', 
-      description: 'Professional kitchen extension with focus on maximizing space and natural light.',
-      includes: ['Structural work', 'Electrical and plumbing', 'Quartz countertops', 'Integrated appliances', '1-year warranty'],
-      submittedAt: new Date('2026-01-22'),
-      validUntil: new Date('2026-02-06'),
-      status: 'pending',
-      contractorId: '3',
-      responseTime: '4 hours'
-    },
-    {
-      id: '3',
-      contractorName: 'Premium Construction Co',
-      contractorRating: 4.8,
-      amount: 26200,
-      timeframe: '3-4 weeks',
-      description: 'Luxury kitchen extension with premium materials and express timeline.',
-      includes: ['Express service', 'Premium marble countertops', 'Miele appliances', 'Underfloor heating', '3-year warranty'],
-      submittedAt: new Date('2026-01-23'),
-      validUntil: new Date('2026-02-07'),
-      status: 'pending',
-      contractorId: '4',
-      responseTime: '1 hour'
-    }
-  ]
+  const mockQuotes: Quote[] = []
 
   const handleAcceptQuote = async (quoteId: string) => {
     try {
@@ -247,230 +204,124 @@ export default function QuoteManagementPage({ params }: { params: { id: string }
         {/* Quotes Tab */}
         {activeTab === 'quotes' && (
           <div style={{ display: 'grid', gap: '1.5rem' }}>
-            {/* Quote Comparison Summary */}
-            <div style={{
-              backgroundColor: 'white',
-              borderRadius: '12px',
-              padding: '2rem',
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
-            }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.5rem', color: '#111827' }}>
-                Quote Comparison
-              </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#10b981', marginBottom: '0.25rem' }}>
-                    {formatCurrency(Math.min(...mockQuotes.map(q => q.amount)))}
+            {mockQuotes.length > 0 ? (
+              <>
+                {/* Quote Comparison Summary */}
+                <div style={{
+                  backgroundColor: 'white',
+                  borderRadius: '12px',
+                  padding: '2rem',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
+                }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.5rem', color: '#111827' }}>
+                    Quote Comparison
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#10b981', marginBottom: '0.25rem' }}>
+                        {formatCurrency(Math.min(...mockQuotes.map(q => q.amount)))}
+                      </div>
+                      <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Lowest Quote</div>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f59e0b', marginBottom: '0.25rem' }}>
+                        {formatCurrency(mockQuotes.reduce((sum, q) => sum + q.amount, 0) / mockQuotes.length)}
+                      </div>
+                      <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Average Quote</div>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#ef4444', marginBottom: '0.25rem' }}>
+                        {formatCurrency(Math.max(...mockQuotes.map(q => q.amount)))}
+                      </div>
+                      <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Highest Quote</div>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#8b5cf6', marginBottom: '0.25rem' }}>
+                        {Math.min(...mockQuotes.map(q => parseInt(q.timeframe.split('-')[0])))} weeks
+                      </div>
+                      <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Fastest Timeline</div>
+                    </div>
                   </div>
-                  <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Lowest Quote</div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#f59e0b', marginBottom: '0.25rem' }}>
-                    {formatCurrency(mockQuotes.reduce((sum, q) => sum + q.amount, 0) / mockQuotes.length)}
-                  </div>
-                  <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Average Quote</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#ef4444', marginBottom: '0.25rem' }}>
-                    {formatCurrency(Math.max(...mockQuotes.map(q => q.amount)))}
-                  </div>
-                  <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Highest Quote</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#8b5cf6', marginBottom: '0.25rem' }}>
-                    {Math.min(...mockQuotes.map(q => parseInt(q.timeframe.split('-')[0])))} weeks
-                  </div>
-                  <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>Fastest Timeline</div>
-                </div>
-              </div>
-            </div>
 
-            {/* Individual Quotes */}
-            {mockQuotes.map(quote => (
-              <div key={quote.id} style={{
+                {/* Individual Quotes */}
+                {mockQuotes.map(quote => (
+                  <div key={quote.id} style={{
+                    backgroundColor: 'white',
+                    borderRadius: '16px',
+                    padding: '2rem',
+                    border: '1px solid #e5e7eb',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                    transition: 'all 0.3s'
+                  }}>
+                    {/* Quote content would go here */}
+                  </div>
+                ))}
+              </>
+            ) : (
+              /* Empty State for No Proposals */
+              <div style={{
                 backgroundColor: 'white',
                 borderRadius: '16px',
-                padding: '2rem',
-                border: '1px solid #e5e7eb',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                transition: 'all 0.3s'
+                padding: '4rem 2rem',
+                textAlign: 'center',
+                border: '2px dashed #e5e7eb',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <div style={{
-                      width: '4rem',
-                      height: '4rem',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontWeight: '700',
-                      fontSize: '1.2rem'
-                    }}>
-                      {quote.contractorName.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                      <h4 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#111827', marginBottom: '0.25rem' }}>
-                        {quote.contractorName}
-                      </h4>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                          <Star style={{ height: '1rem', width: '1rem', color: '#fbbf24', fill: '#fbbf24' }} />
-                          <span style={{ fontWeight: '600', color: '#111827' }}>{quote.contractorRating}</span>
-                          <span style={{ color: '#6b7280' }}>(127 reviews)</span>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                          <Clock style={{ height: '1rem', width: '1rem', color: '#6b7280' }} />
-                          <span style={{ color: '#6b7280' }}>Responds in {quote.responseTime}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '2rem', fontWeight: '800', color: '#111827', marginBottom: '0.25rem' }}>
-                      {formatCurrency(quote.amount)}
-                    </div>
-                    <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>
-                      Valid until {quote.validUntil.toLocaleDateString()}
-                    </div>
-                    <div style={{ 
-                      fontSize: '0.8rem', 
-                      color: quote.validUntil > new Date() ? '#10b981' : '#ef4444',
-                      fontWeight: '600'
-                    }}>
-                      {calculateTimeLeft(quote.validUntil)}
-                    </div>
-                  </div>
+                <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>📝</div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827', marginBottom: '1rem' }}>
+                  No Proposals Yet
+                </h3>
+                <p style={{ color: '#6b7280', fontSize: '1.1rem', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
+                  Your project was just posted! Qualified contractors will start submitting proposals soon. 
+                  You'll be notified when the first proposals arrive.
+                </p>
+                <div style={{
+                  backgroundColor: '#fef3c7',
+                  color: '#92400e',
+                  padding: '1rem 1.5rem',
+                  borderRadius: '8px',
+                  fontSize: '0.95rem',
+                  marginBottom: '2rem',
+                  display: 'inline-block'
+                }}>
+                  💡 <strong>Tip:</strong> Most projects receive 3-8 proposals within 24-48 hours
                 </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: '2rem', marginBottom: '1.5rem' }}>
-                  <div>
-                    <p style={{ color: '#374151', fontSize: '1rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                      {quote.description}
-                    </p>
-                    
-                    <div>
-                      <h5 style={{ fontSize: '1rem', fontWeight: '600', color: '#111827', marginBottom: '0.5rem' }}>
-                        What's included:
-                      </h5>
-                      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                        {quote.includes.map((item, index) => (
-                          <li key={index} style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: '0.5rem',
-                            marginBottom: '0.25rem',
-                            color: '#374151'
-                          }}>
-                            <CheckCircle style={{ height: '1rem', width: '1rem', color: '#10b981' }} />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div style={{ 
-                      backgroundColor: '#f8fafc',
-                      borderRadius: '8px',
-                      padding: '1rem',
-                      marginBottom: '1rem'
-                    }}>
-                      <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '0.25rem' }}>
-                        Estimated Timeline
-                      </div>
-                      <div style={{ fontSize: '1.1rem', fontWeight: '600', color: '#111827' }}>
-                        {quote.timeframe}
-                      </div>
-                    </div>
-                    
-                    <div style={{ fontSize: '0.85rem', color: '#6b7280', marginBottom: '0.5rem' }}>
-                      Quote submitted: {quote.submittedAt.toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
-                  <button 
-                    onClick={() => {
-                      setSelectedQuote(quote)
-                      setShowQuoteModal(true)
-                    }}
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <a
+                    href="/professionals"
                     style={{
                       backgroundColor: '#f59e0b',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.75rem 2rem',
+                      color: '#fff',
+                      padding: '0.75rem 1.5rem',
                       borderRadius: '8px',
+                      textDecoration: 'none',
                       fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.5rem'
                     }}
                   >
-                    <CheckCircle style={{ height: '1rem', width: '1rem' }} />
-                    Accept Quote
-                  </button>
-                  
-                  <button style={{
-                    backgroundColor: 'white',
-                    color: '#374151',
-                    border: '1px solid #d1d5db',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}>
-                    <MessageSquare style={{ height: '1rem', width: '1rem' }} />
-                    Message
-                  </button>
-                  
-                  <button style={{
-                    backgroundColor: 'white',
-                    color: '#374151',
-                    border: '1px solid #d1d5db',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}>
-                    <User style={{ height: '1rem', width: '1rem' }} />
-                    View Profile
-                  </button>
-                  
-                  <button 
-                    onClick={() => handleRejectQuote(quote.id)}
+                    Browse Professionals
+                  </a>
+                  <a
+                    href="/help"
                     style={{
-                      backgroundColor: '#fee2e2',
-                      color: '#dc2626',
-                      border: '1px solid #fecaca',
+                      backgroundColor: 'transparent',
+                      color: '#f59e0b',
                       padding: '0.75rem 1.5rem',
                       borderRadius: '8px',
+                      textDecoration: 'none',
                       fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s'
+                      border: '2px solid #f59e0b'
                     }}
                   >
-                    Decline
-                  </button>
+                    Need Help?
+                  </a>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         )}
 
@@ -480,136 +331,24 @@ export default function QuoteManagementPage({ params }: { params: { id: string }
             backgroundColor: 'white',
             borderRadius: '16px',
             border: '1px solid #e5e7eb',
-            height: '600px',
-            display: 'flex'
+            height: '500px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: '2rem'
           }}>
-            {/* Conversation List */}
-            <div style={{ width: '300px', borderRight: '1px solid #e5e7eb' }}>
-              <div style={{ padding: '1rem', borderBottom: '1px solid #e5e7eb' }}>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: '600', margin: 0 }}>Conversations</h3>
-              </div>
-              <div style={{ overflowY: 'auto', height: 'calc(600px - 60px)' }}>
-                {/* Mock conversations */}
-                {mockQuotes.map(quote => (
-                  <div key={quote.id} style={{
-                    padding: '1rem',
-                    borderBottom: '1px solid #f3f4f6',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.2s'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                      <div style={{
-                        width: '2.5rem',
-                        height: '2.5rem',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'white',
-                        fontWeight: '600',
-                        fontSize: '0.9rem'
-                      }}>
-                        {quote.contractorName.split(' ').map(n => n[0]).join('')}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '0.9rem', fontWeight: '600', color: '#111827' }}>
-                          {quote.contractorName}
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>
-                          Quote submitted
-                        </div>
-                      </div>
-                      <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        backgroundColor: '#f59e0b'
-                      }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Message Area */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <div style={{ padding: '1rem', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: '600', margin: 0 }}>Elite Kitchen Specialists</h3>
-                  <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>Online now</div>
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button style={{
-                    backgroundColor: '#f3f4f6',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.5rem',
-                    cursor: 'pointer'
-                  }}>
-                    <Phone style={{ height: '1.2rem', width: '1.2rem', color: '#6b7280' }} />
-                  </button>
-                  <button style={{
-                    backgroundColor: '#f3f4f6',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.5rem',
-                    cursor: 'pointer'
-                  }}>
-                    <Video style={{ height: '1.2rem', width: '1.2rem', color: '#6b7280' }} />
-                  </button>
-                </div>
-              </div>
-              
-              <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ textAlign: 'center', color: '#6b7280' }}>
-                  <MessageSquare style={{ height: '3rem', width: '3rem', margin: '0 auto 1rem', opacity: 0.3 }} />
-                  <p>Start a conversation about your project</p>
-                </div>
-              </div>
-              
-              <div style={{ padding: '1rem', borderTop: '1px solid #e5e7eb' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-end' }}>
-                  <button style={{
-                    backgroundColor: '#f3f4f6',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.75rem',
-                    cursor: 'pointer'
-                  }}>
-                    <Paperclip style={{ height: '1.2rem', width: '1.2rem', color: '#6b7280' }} />
-                  </button>
-                  <div style={{ flex: 1, position: 'relative' }}>
-                    <textarea 
-                      placeholder="Type your message..."
-                      style={{
-                        width: '100%',
-                        minHeight: '50px',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '8px',
-                        padding: '0.75rem',
-                        resize: 'none',
-                        fontFamily: 'inherit'
-                      }}
-                    />
-                  </div>
-                  <button style={{
-                    backgroundColor: '#f59e0b',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '0.75rem 1.5rem',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}>
-                    <Send style={{ height: '1.2rem', width: '1.2rem' }} />
-                    Send
-                  </button>
-                </div>
-              </div>
+            <div>
+              <MessageSquare size={64} style={{ color: '#d1d5db', marginBottom: '1.5rem' }} />
+              <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827', marginBottom: '1rem' }}>
+                No Messages Yet
+              </h3>
+              <p style={{ color: '#6b7280', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                Once contractors submit proposals, you'll be able to message them directly here.
+              </p>
+              <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>
+                Messages will appear when you receive your first proposals.
+              </p>
             </div>
           </div>
         )}

@@ -99,7 +99,7 @@ export default function MyJobsPage() {
       budget: 25000,
       status: 'active',
       datePosted: '2026-01-20',
-      proposals: 8,
+      proposals: 0, // No proposals yet - system has no contractors
       deadline: '2026-02-15'
     },
     {
@@ -110,7 +110,7 @@ export default function MyJobsPage() {
       budget: 15000,
       status: 'completed',
       datePosted: '2025-12-10',
-      proposals: 12,
+      proposals: 0, // No proposals - demonstration purposes
       completedDate: '2026-01-10'
     },
     {
@@ -430,21 +430,22 @@ export default function MyJobsPage() {
                       <>
                         <button 
                           onClick={() => handleViewProposals(job.id)}
+                          disabled={job.proposals === 0}
                           style={{
-                            backgroundColor: '#f59e0b',
+                            backgroundColor: job.proposals > 0 ? '#f59e0b' : '#9ca3af',
                             color: 'white',
                             border: 'none',
                             padding: '0.75rem 1.5rem',
                             borderRadius: '8px',
                             fontWeight: '600',
-                            cursor: 'pointer',
+                            cursor: job.proposals > 0 ? 'pointer' : 'not-allowed',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.5rem'
                           }}
                         >
                           <MessageSquare style={{ height: '1rem', width: '1rem' }} />
-                          View Proposals ({job.proposals})
+                          {job.proposals > 0 ? `View Proposals (${job.proposals})` : 'No Proposals Yet'}
                         </button>
                         <button style={{
                           border: '1px solid #e5e7eb',
