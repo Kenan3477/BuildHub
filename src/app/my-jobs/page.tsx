@@ -14,13 +14,35 @@ import {
   MessageSquare,
   Edit,
   Plus,
-  Building
+  Building,
+  Trash2
 } from "lucide-react"
 
 export default function MyJobsPage() {
   const { isAuthenticated, user } = useAuth()
   const { getAllJobs } = useJobs()
   const [activeTab, setActiveTab] = useState<'active' | 'completed' | 'draft'>('active')
+  const [deletingJobId, setDeletingJobId] = useState<string | null>(null)
+
+  // Handle delete job
+  const handleDeleteJob = async (jobId: string, jobTitle: string) => {
+    if (confirm(`Are you sure you want to delete "${jobTitle}"? This action cannot be undone.`)) {
+      setDeletingJobId(jobId)
+      // In a real app, make API call to delete job
+      // For now, just simulate deletion
+      setTimeout(() => {
+        setDeletingJobId(null)
+        alert('Job deleted successfully!')
+        // Here you would normally reload the jobs or remove from state
+        window.location.reload()
+      }, 1000)
+    }
+  }
+
+  // Handle view proposals
+  const handleViewProposals = (jobId: string) => {
+    window.location.href = `/project/${jobId}/quotes`
+  }
 
   // Handle post project click
   const handlePostProject = () => {
@@ -373,24 +395,70 @@ export default function MyJobsPage() {
                   )}
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb' }}>
-                  {job.status === 'draft' ? (
-                    <>
-                      <button style={{
-                        backgroundColor: '#f59e0b',
-                        color: 'white',
-                        border: 'none',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '8px',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem'
-                      }}>
-                        <Edit style={{ height: '1rem', width: '1rem' }} />
-                        Continue Editing
-                      </button>
+                <div style={{ display: 'flex', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid #e5e7eb', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    {job.status === 'draft' ? (
+                      <>
+                        <button style={{
+                          backgroundColor: '#f59e0b',
+                          color: 'white',
+                          border: 'none',
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '8px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <Edit style={{ height: '1rem', width: '1rem' }} />
+                          Continue Editing
+                        </button>
+                        <button style={{
+                          backgroundColor: '#10b981',
+                          color: 'white',
+                          border: 'none',
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '8px',
+                          fontWeight: '600',
+                          cursor: 'pointer'
+                        }}>
+                          Publish Job
+                        </button>
+                      </>
+                    ) : job.status === 'active' ? (
+                      <>
+                        <button 
+                          onClick={() => handleViewProposals(job.id)}
+                          style={{
+                            backgroundColor: '#f59e0b',
+                            color: 'white',
+                            border: 'none',
+                            padding: '0.75rem 1.5rem',
+                            borderRadius: '8px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                          }}
+                        >
+                          <MessageSquare style={{ height: '1rem', width: '1rem' }} />
+                          View Proposals ({job.proposals})
+                        </button>
+                        <button style={{
+                          border: '1px solid #e5e7eb',
+                          backgroundColor: 'white',
+                          color: '#374151',
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '8px',
+                          fontWeight: '600',
+                          cursor: 'pointer'
+                        }}>
+                          Edit Job
+                        </button>
+                      </>
+                    ) : (
                       <button style={{
                         backgroundColor: '#10b981',
                         color: 'white',
@@ -398,57 +466,38 @@ export default function MyJobsPage() {
                         padding: '0.75rem 1.5rem',
                         borderRadius: '8px',
                         fontWeight: '600',
-                        cursor: 'pointer'
-                      }}>
-                        Publish Job
-                      </button>
-                    </>
-                  ) : job.status === 'active' ? (
-                    <>
-                      <button style={{
-                        backgroundColor: '#f59e0b',
-                        color: 'white',
-                        border: 'none',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '8px',
-                        fontWeight: '600',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem'
                       }}>
-                        <MessageSquare style={{ height: '1rem', width: '1rem' }} />
-                        View Proposals ({job.proposals})
+                        <CheckCircle style={{ height: '1rem', width: '1rem' }} />
+                        View Details
                       </button>
-                      <button style={{
-                        border: '1px solid #e5e7eb',
-                        backgroundColor: 'white',
-                        color: '#374151',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '8px',
-                        fontWeight: '600',
-                        cursor: 'pointer'
-                      }}>
-                        Edit Job
-                      </button>
-                    </>
-                  ) : (
-                    <button style={{
-                      backgroundColor: '#10b981',
+                    )}
+                  </div>
+                  
+                  {/* Delete Button */}
+                  <button 
+                    onClick={() => handleDeleteJob(job.id, job.title)}
+                    disabled={deletingJobId === job.id}
+                    style={{
+                      backgroundColor: deletingJobId === job.id ? '#9ca3af' : '#dc2626',
                       color: 'white',
                       border: 'none',
-                      padding: '0.75rem 1.5rem',
+                      padding: '0.75rem 1rem',
                       borderRadius: '8px',
                       fontWeight: '600',
-                      cursor: 'pointer',
+                      cursor: deletingJobId === job.id ? 'not-allowed' : 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.5rem'
-                    }}>
-                      <CheckCircle style={{ height: '1rem', width: '1rem' }} />
-                      View Details
-                    </button>
-                  )}
+                      gap: '0.5rem',
+                      transition: 'background-color 0.2s'
+                    }}
+                  >
+                    <Trash2 style={{ height: '1rem', width: '1rem' }} />
+                    {deletingJobId === job.id ? 'Deleting...' : 'Delete'}
+                  </button>
                 </div>
               </div>
             ))

@@ -37,20 +37,22 @@ interface Quote {
   responseTime: string
 }
 
-export default function QuoteManagementPage() {
+export default function QuoteManagementPage({ params }: { params: { id: string } }) {
   const { user } = useAuth()
-  const [activeProject, setActiveProject] = useState<string>('1')
+  const [activeProject, setActiveProject] = useState<string>(params.id || '1')
   const [activeTab, setActiveTab] = useState<'quotes' | 'messages' | 'progress'>('quotes')
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null)
   const [showQuoteModal, setShowQuoteModal] = useState(false)
 
   // Mock data - replace with real API calls
   const mockProject = {
-    id: '1',
-    title: 'Kitchen Extension and Renovation',
-    description: 'Complete kitchen extension with island, granite countertops, and modern appliances',
-    budget: 25000,
-    location: 'Kensington, London',
+    id: params.id,
+    title: params.id === '1' ? 'Kitchen Renovation' : `Project ${params.id}`,
+    description: params.id === '1' ? 
+      'Complete kitchen renovation including new cabinets, countertops, and appliances' :
+      'Construction project details will be loaded here',
+    budget: params.id === '1' ? 25000 : 20000,
+    location: params.id === '1' ? 'Kensington, London' : 'London, UK',
     status: 'active' as const,
     postedAt: new Date('2026-01-20'),
     deadline: new Date('2026-03-15')
