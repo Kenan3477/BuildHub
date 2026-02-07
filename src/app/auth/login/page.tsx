@@ -37,14 +37,14 @@ export default function LoginPage() {
             phone: '',
             verified: true,
             userType: userType,
-            credits: userType === 'contractor' ? 500 : 0 // Give contractors 500 free credits
+            credits: userType === 'contractor' ? 50 : 0 // Give contractors 50 free credits
           };
           
           const token = 'user-token-' + newUser.id;
           login(token, newUser);
           
           if (userType === 'contractor') {
-            alert('Welcome to BuildHub! 🎉 You have received 500 free credits to unlock job details!');
+            alert('Welcome to BuildHub! 🎉 You have received 50 free credits to unlock job details!');
           } else {
             alert('Account created successfully!');
           }
@@ -549,7 +549,7 @@ export default function LoginPage() {
                   <>
                     <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>🎉</span>
-                      <span style={{ fontWeight: '600' }}>500 FREE credits to unlock job details</span>
+                      <span style={{ fontWeight: '600' }}>50 FREE credits to unlock job details</span>
                     </li>
                     <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '18px' }}>✓</span>
