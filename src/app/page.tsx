@@ -1328,7 +1328,7 @@ export default function BuildHubHomePage() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '0.9rem' }}>
                 <li style={{ marginBottom: '0.75rem' }}><a href="/professionals" style={{ color: '#d1d5db', textDecoration: 'none', fontWeight: '500' }}>Browse All Professionals</a></li>
                 <li style={{ marginBottom: '0.75rem' }}><button onClick={handlePostProject} style={{ color: '#d1d5db', textDecoration: 'none', fontWeight: '500', background: 'none', border: 'none', cursor: 'pointer' }}>Post a Project</button></li>
-                <li style={{ marginBottom: '0.75rem' }}><a href="#marketplace" style={{ color: '#d1d5db', textDecoration: 'none', fontWeight: '500' }}>How It Works</a></li>
+                <li style={{ marginBottom: '0.75rem' }}><a href="/how-it-works" style={{ color: '#d1d5db', textDecoration: 'none', fontWeight: '500' }}>How It Works</a></li>
                 <li style={{ marginBottom: '0.75rem' }}><a href="/auth/login" style={{ color: '#d1d5db', textDecoration: 'none', fontWeight: '500' }}>Join as Professional</a></li>
               </ul>
             </div>
